@@ -14,7 +14,7 @@ class QuestionsScreen extends ConsumerWidget {
     final questionsList = ref.watch(questionsListRiverpod);
     final questionsListNotifier = ref.read(questionsListRiverpod.notifier);
     final selectedQuestionNotifier =
-    ref.read(selectedQuestionRiverpod.notifier);
+        ref.read(selectedQuestionRiverpod.notifier);
 
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.5,
@@ -35,12 +35,12 @@ class QuestionsScreen extends ConsumerWidget {
                   InkWell(
                     borderRadius: BorderRadius.circular(
                       MediaQuery.of(context).size.width >
-                          MediaQuery.of(context).size.height
+                              MediaQuery.of(context).size.height
                           ? MediaQuery.of(context).size.height * 0.4
                           : MediaQuery.of(context).size.width * 0.4,
                     ),
                     radius: MediaQuery.of(context).size.width >
-                        MediaQuery.of(context).size.height
+                            MediaQuery.of(context).size.height
                         ? MediaQuery.of(context).size.height * 0.4
                         : MediaQuery.of(context).size.width * 0.4,
                     onTap: () {
@@ -66,12 +66,12 @@ class QuestionsScreen extends ConsumerWidget {
                   InkWell(
                     borderRadius: BorderRadius.circular(
                       MediaQuery.of(context).size.width >
-                          MediaQuery.of(context).size.height
+                              MediaQuery.of(context).size.height
                           ? MediaQuery.of(context).size.height * 0.4
                           : MediaQuery.of(context).size.width * 0.4,
                     ),
                     radius: MediaQuery.of(context).size.width >
-                        MediaQuery.of(context).size.height
+                            MediaQuery.of(context).size.height
                         ? MediaQuery.of(context).size.height * 0.4
                         : MediaQuery.of(context).size.width * 0.4,
                     onTap: () {
@@ -88,7 +88,7 @@ class QuestionsScreen extends ConsumerWidget {
               const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
-                  itemExtent: MediaQuery.of(context).size.height * 0.07,
+                  itemExtent: MediaQuery.of(context).size.height * 0.2,
                   itemCount: questionsList.length,
                   itemBuilder: (context, index) => SizedBox(
                     width: MediaQuery.of(context).size.width * 0.5,
@@ -96,12 +96,12 @@ class QuestionsScreen extends ConsumerWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(
                         MediaQuery.of(context).size.width >
-                            MediaQuery.of(context).size.height
+                                MediaQuery.of(context).size.height
                             ? MediaQuery.of(context).size.height * 0.4
                             : MediaQuery.of(context).size.width * 0.4,
                       ),
                       radius: MediaQuery.of(context).size.width >
-                          MediaQuery.of(context).size.height
+                              MediaQuery.of(context).size.height
                           ? MediaQuery.of(context).size.height * 0.4
                           : MediaQuery.of(context).size.width * 0.4,
                       onTap: () {
@@ -112,39 +112,45 @@ class QuestionsScreen extends ConsumerWidget {
                           builder: (context) => const UpdateQuestionScreen(),
                         );
                       },
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          child: Text(
-                            questionsList[index].id.toString(),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: CircleAvatar(
+                              child: Text(
+                                questionsList[index].id.toString(),
+                              ),
+                            ),
+                            title:
+                                Text('السؤال رقم ${questionsList[index].id}'),
+                            trailing: InkWell(
+                              borderRadius: BorderRadius.circular(
+                                MediaQuery.of(context).size.width >
+                                        MediaQuery.of(context).size.height
+                                    ? MediaQuery.of(context).size.height * 0.4
+                                    : MediaQuery.of(context).size.width * 0.4,
+                              ),
+                              radius: MediaQuery.of(context).size.width >
+                                      MediaQuery.of(context).size.height
+                                  ? MediaQuery.of(context).size.height * 0.4
+                                  : MediaQuery.of(context).size.width * 0.4,
+                              onTap: () {
+                                questionsListNotifier
+                                    .deleteHQuestion(questionsList[index].id!);
+                                Navigator.of(context).pop(false);
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const QuestionsScreen(),
+                                );
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                color: Theme.of(context).colorScheme.error,
+                                size: 30,
+                              ),
+                            ),
                           ),
-                        ),
-                        title: Text('السؤال رقم ${questionsList[index].id}'),
-                        trailing: InkWell(
-                          borderRadius: BorderRadius.circular(
-                            MediaQuery.of(context).size.width >
-                                MediaQuery.of(context).size.height
-                                ? MediaQuery.of(context).size.height * 0.4
-                                : MediaQuery.of(context).size.width * 0.4,
-                          ),
-                          radius: MediaQuery.of(context).size.width >
-                              MediaQuery.of(context).size.height
-                              ? MediaQuery.of(context).size.height * 0.4
-                              : MediaQuery.of(context).size.width * 0.4,
-                          onTap: () {
-                            questionsListNotifier
-                                .deleteHQuestion(questionsList[index].id!);
-                            Navigator.of(context).pop(false);
-                            showDialog(
-                              context: context,
-                              builder: (context) => const QuestionsScreen(),
-                            );
-                          },
-                          child: Icon(
-                            Icons.delete,
-                            color: Theme.of(context).colorScheme.error,
-                            size: 30,
-                          ),
-                        ),
+                          const SizedBox(height: 5),
+                        ],
                       ),
                     ),
                   ),

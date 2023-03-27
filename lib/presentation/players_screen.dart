@@ -20,7 +20,7 @@ class PlayersScreen extends ConsumerWidget {
     final player4Notifier = ref.read(playerFourRiverpod.notifier);
 
     final TextEditingController player1Controller =
-    TextEditingController(text: player1.name ?? '');
+        TextEditingController(text: player1.name ?? '');
     player1Controller.value = player1Controller.value.copyWith(
       selection: TextSelection.fromPosition(
         TextPosition(
@@ -29,7 +29,7 @@ class PlayersScreen extends ConsumerWidget {
     );
 
     final TextEditingController player2Controller =
-    TextEditingController(text: player2.name ?? '');
+        TextEditingController(text: player2.name ?? '');
     player2Controller.value = player2Controller.value.copyWith(
       selection: TextSelection.fromPosition(
         TextPosition(
@@ -38,7 +38,7 @@ class PlayersScreen extends ConsumerWidget {
     );
 
     final TextEditingController player3Controller =
-    TextEditingController(text: player3.name ?? '');
+        TextEditingController(text: player3.name ?? '');
     player3Controller.value = player3Controller.value.copyWith(
       selection: TextSelection.fromPosition(
         TextPosition(
@@ -47,7 +47,7 @@ class PlayersScreen extends ConsumerWidget {
     );
 
     final TextEditingController player4Controller =
-    TextEditingController(text: player4.name ?? '');
+        TextEditingController(text: player4.name ?? '');
     player4Controller.value = player4Controller.value.copyWith(
       selection: TextSelection.fromPosition(
         TextPosition(
@@ -69,94 +69,89 @@ class PlayersScreen extends ConsumerWidget {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) => SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(
-                            MediaQuery.of(context).size.width >
-                                MediaQuery.of(context).size.height
-                                ? MediaQuery.of(context).size.height * 0.4
-                                : MediaQuery.of(context).size.width * 0.4,
-                          ),
-                          radius: MediaQuery.of(context).size.width >
-                              MediaQuery.of(context).size.height
-                              ? MediaQuery.of(context).size.height * 0.4
-                              : MediaQuery.of(context).size.width * 0.4,
-                          onTap: () {
-                            Navigator.of(context).pop(false);
-                          },
-                          child: Icon(
-                            Icons.close,
-                            color: Theme.of(context).colorScheme.error,
-                            size: 50,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          decoration: textInputDecoration(context).copyWith(
-                            labelText: 'اللاعب الأول',
-                          ),
-                          controller: player1Controller,
-                          onChanged: (String val) =>
-                              player1Notifier.updateName(val),
-                        ),
-                        const SizedBox(height: 10.0),
-                        TextFormField(
-                          decoration: textInputDecoration(context).copyWith(
-                            labelText: 'اللاعب الثاني',
-                          ),
-                          controller: player2Controller,
-                          onChanged: (String val) =>
-                              player2Notifier.updateName(val),
-                        ),
-                        const SizedBox(height: 10.0),
-                        TextFormField(
-                          decoration: textInputDecoration(context).copyWith(
-                            labelText: 'اللاعب الثالث',
-                          ),
-                          controller: player3Controller,
-                          onChanged: (String val) =>
-                              player3Notifier.updateName(val),
-                        ),
-                        const SizedBox(height: 10.0),
-                        TextFormField(
-                          decoration: textInputDecoration(context).copyWith(
-                            labelText: 'اللاعب الرابع',
-                          ),
-                          controller: player4Controller,
-                          onChanged: (String val) =>
-                              player4Notifier.updateName(val),
-                        ),
-                        const SizedBox(height: 10.0),
-                        Expanded(
-                          child: TextButton(
-                            style: buttonSubmit(context),
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Game(),
-                                ),
-                                    (route) => false,
-                              );
-                            },
-                            child: const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Text('موافق'),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                      ],
-                    ),
+                flex: 1,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(
+                    MediaQuery.of(context).size.width >
+                            MediaQuery.of(context).size.height
+                        ? MediaQuery.of(context).size.height * 0.4
+                        : MediaQuery.of(context).size.width * 0.4,
                   ),
+                  radius: MediaQuery.of(context).size.width >
+                          MediaQuery.of(context).size.height
+                      ? MediaQuery.of(context).size.height * 0.4
+                      : MediaQuery.of(context).size.width * 0.4,
+                  onTap: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Theme.of(context).colorScheme.error,
+                    size: 50,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                flex: 5,
+                child: ListView(
+                  children: [
+                    TextFormField(
+                      decoration: textInputDecoration(context).copyWith(
+                        labelText: 'اللاعب الأول',
+                      ),
+                      controller: player1Controller,
+                      onChanged: (String val) =>
+                          player1Notifier.updateName(val),
+                    ),
+                    const SizedBox(height: 10.0),
+                    TextFormField(
+                      decoration: textInputDecoration(context).copyWith(
+                        labelText: 'اللاعب الثاني',
+                      ),
+                      controller: player2Controller,
+                      onChanged: (String val) =>
+                          player2Notifier.updateName(val),
+                    ),
+                    const SizedBox(height: 10.0),
+                    TextFormField(
+                      decoration: textInputDecoration(context).copyWith(
+                        labelText: 'اللاعب الثالث',
+                      ),
+                      controller: player3Controller,
+                      onChanged: (String val) =>
+                          player3Notifier.updateName(val),
+                    ),
+                    const SizedBox(height: 10.0),
+                    TextFormField(
+                      decoration: textInputDecoration(context).copyWith(
+                        labelText: 'اللاعب الرابع',
+                      ),
+                      controller: player4Controller,
+                      onChanged: (String val) =>
+                          player4Notifier.updateName(val),
+                    ),
+                    const SizedBox(height: 10.0),
+                    TextButton(
+                      style: buttonSubmit(context),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Game(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Text('موافق'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                  ],
                 ),
               ),
             ],

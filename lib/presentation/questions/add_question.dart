@@ -13,21 +13,21 @@ class AddQuestionScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedQuestion = ref.watch(selectedQuestionRiverpod);
     final selectedQuestionNotifier =
-    ref.read(selectedQuestionRiverpod.notifier);
+        ref.read(selectedQuestionRiverpod.notifier);
     final questionsList = ref.watch(questionsListRiverpod);
     final questionsListNotifier = ref.read(questionsListRiverpod.notifier);
 
     final TextEditingController selectedQuestionController =
-    TextEditingController(text: selectedQuestion.question ?? '');
+        TextEditingController(text: selectedQuestion.question ?? '');
     selectedQuestionController.value =
         selectedQuestionController.value.copyWith(
-          selection: TextSelection.fromPosition(
-            TextPosition(
-                offset: selectedQuestion.question != null
-                    ? selectedQuestion.question!.length
-                    : ''.length),
-          ),
-        );
+      selection: TextSelection.fromPosition(
+        TextPosition(
+            offset: selectedQuestion.question != null
+                ? selectedQuestion.question!.length
+                : ''.length),
+      ),
+    );
 
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.5,
@@ -42,77 +42,70 @@ class AddQuestionScreen extends ConsumerWidget {
           ),
           child: Column(
             children: [
-              InkWell(
-                borderRadius: BorderRadius.circular(
-                  MediaQuery.of(context).size.width >
-                      MediaQuery.of(context).size.height
+              Expanded(
+                flex: 1,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(
+                    MediaQuery.of(context).size.width >
+                            MediaQuery.of(context).size.height
+                        ? MediaQuery.of(context).size.height * 0.4
+                        : MediaQuery.of(context).size.width * 0.4,
+                  ),
+                  radius: MediaQuery.of(context).size.width >
+                          MediaQuery.of(context).size.height
                       ? MediaQuery.of(context).size.height * 0.4
                       : MediaQuery.of(context).size.width * 0.4,
-                ),
-                radius: MediaQuery.of(context).size.width >
-                    MediaQuery.of(context).size.height
-                    ? MediaQuery.of(context).size.height * 0.4
-                    : MediaQuery.of(context).size.width * 0.4,
-                onTap: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Icon(
-                  Icons.close,
-                  color: Theme.of(context).colorScheme.error,
-                  size: 50,
+                  onTap: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Theme.of(context).colorScheme.error,
+                    size: 50,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemExtent: MediaQuery.of(context).size.height * 0.2,
-                  itemBuilder: (context, index) => SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: textInputDecoration(context).copyWith(
-                            labelText: 'السؤال',
-                          ),
-                          controller: selectedQuestionController,
-                          onChanged: (String val) =>
-                              selectedQuestionNotifier.updateQuestion(
-                                HQuestionModel(
-                                    id: questionsList.isEmpty
-                                        ? 1
-                                        : questionsList.length + 1,
-                                    question: val),
-                              ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        Expanded(
-                          child: TextButton(
-                            style: buttonSubmit(context),
-                            onPressed: () {
-                              questionsListNotifier
-                                  .updateHQuestion(selectedQuestion);
-
-                              Navigator.of(context).pop(false);
-                              Navigator.of(context).pop(false);
-                              showDialog(
-                                context: context,
-                                builder: (context) => const QuestionsScreen(),
-                              );
-                            },
-                            child: const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Text('موافق'),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                      ],
+                flex: 5,
+                child: ListView(
+                  children: [
+                    TextFormField(
+                      decoration: textInputDecoration(context).copyWith(
+                        labelText: 'السؤال',
+                      ),
+                      controller: selectedQuestionController,
+                      onChanged: (String val) =>
+                          selectedQuestionNotifier.updateQuestion(
+                        HQuestionModel(
+                            id: questionsList.isEmpty
+                                ? 1
+                                : questionsList.length + 1,
+                            question: val),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10.0),
+                    TextButton(
+                      style: buttonSubmit(context),
+                      onPressed: () {
+                        questionsListNotifier.updateHQuestion(selectedQuestion);
+
+                        Navigator.of(context).pop(false);
+                        Navigator.of(context).pop(false);
+                        showDialog(
+                          context: context,
+                          builder: (context) => const QuestionsScreen(),
+                        );
+                      },
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Text('موافق'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                  ],
                 ),
               ),
             ],
